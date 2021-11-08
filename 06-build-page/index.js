@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { readFile, readdir, mkdir, rmdir , copyFile, rm} = require('fs/promises');
+const { readFile, readdir, mkdir, copyFile, rm} = require('fs/promises');
 
 let newFolder = path.join(__dirname, 'project-dist');
 let pathTemp = path.join(__dirname, 'template.html');
@@ -40,7 +40,7 @@ let pathNewDir = path.join(__dirname, 'project-dist', 'assets');
 
 async function copyDir(pathDir, pathNewDir) {
   try {
-    await rmdir(pathNewDir, { recursive: true});
+    await rm(pathNewDir, { recursive: true, force: true});
     await mkdir(pathNewDir, {recursive: true});
     const filesAtFolder = await readdir(pathDir, {withFileTypes: true});
     for (let file of filesAtFolder) {
@@ -62,7 +62,7 @@ let pathStyleOut = path.join(__dirname, 'project-dist', 'style.css');
 
 async function copyStyleInBundle(pathStyle, pathBundle) {
   try {
-    await rm(pathBundle, {force: true});
+    await rm(pathBundle, {recursive: true, force: true});
     const output = fs.createWriteStream(pathBundle);
     const filesAtFolder = await readdir(pathStyle, {withFileTypes: true});
     for (let file of filesAtFolder) {
@@ -80,7 +80,7 @@ async function copyStyleInBundle(pathStyle, pathBundle) {
 };
 
 async function getBundle() {
-  await rmdir(newFolder, { recursive: true});
+  await rm(newFolder, { recursive: true, force: true});
   await mkdir(newFolder, {recursive: true});
 
   copyStyleInBundle(pathStyleIn, pathStyleOut);

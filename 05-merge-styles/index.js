@@ -8,7 +8,7 @@ let pathBundle = path.join(__dirname, 'project-dist', 'bundle.css');
 
 async function copyStyleInBundle(pathStyle, pathBundle) {
   try {
-    await rm(pathBundle, {force: true});
+    await rm(pathBundle, {recursive: true, force: true});
     const output = fs.createWriteStream(pathBundle);
     const filesAtFolder = await readdir(pathStyle, {withFileTypes: true});
     for (let file of filesAtFolder) {

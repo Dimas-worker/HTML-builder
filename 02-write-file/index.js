@@ -4,7 +4,7 @@ const { stdin: input, stdout: output } = require('process');
 
 fs.createWriteStream(path.join(__dirname, 'input.txt'));
 
-output.write('please, print some text\n');
+output.write('please, enter some text\n');
 
 input.on('data', (data) => {
 
@@ -12,7 +12,7 @@ input.on('data', (data) => {
 
   fs.appendFile(path.join(__dirname,'input.txt'), `${data}`, err => { if (err) throw err} );
   
-  output.write("print other text or 'exit'\n");
+  output.write("enter other text or 'exit'\n");
 
 });
 process.on('SIGINT', () => { process.exit() });
